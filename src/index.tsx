@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import ApolloProvider from './ApolloProvider';
 
+
+// our client application needs access to...
+// client (apolloProvider)
+// authorization context 
+// Browser Router (react router) /login /register 
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
