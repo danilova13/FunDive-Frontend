@@ -13,10 +13,10 @@ const httpLink = createHttpLink({
     uri: 'http://localhost:8000/graphql'
 })
 
-const authLink = setContext((_, { header }) => {
+const authLink = setContext((_, { headers }) => {
     return { 
         headers: {
-            ...header,
+            ...headers,
             authorization: localStorage.getItem('jwtToken') || ""
         }
     }
