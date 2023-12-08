@@ -24,7 +24,7 @@ if(localStorage.getItem('jwtToken')) {
 // logout function - clears the cache 
 const AuthContext = createContext({
     user: null,
-    login: (userData) => {},
+    login: (userData: any) => {},
     logout: () => {}
 })
 
@@ -65,4 +65,13 @@ function AuthProvider(props: any) {
         localStorage.removeItem("jwtToken");
         dispatch({ type: "LOGOUT" })
     }
+
+    return (
+        <AuthContext.Provider 
+            value={{user: state.user, login, logout}}
+            {...props}
+        />
+    )
 }
+
+export { AuthContext, AuthProvider }
