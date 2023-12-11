@@ -10,7 +10,7 @@ export const useForm = (callback, initialState = {}) => {
         // uses the input's name attribute to identify which part of the state to update
         // and sets it to the current value of that input 
         setValues({ ...values, [event.target.name]: event.target.value });
-        console.log(values);
+        //console.log(values);
     }
 
     const onSubmit = (event) => {
