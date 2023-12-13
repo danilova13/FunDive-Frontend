@@ -12,13 +12,21 @@ const initialState: { user: DecodedToken | null } = {
 
 // if there is token in local storage -> decode the token 
 if(localStorage.getItem('jwtToken')) {
-    const decodedToken = jwtDecode<DecodedToken>(localStorage.getItem('jwtToken') as string);
-
-    if(decodedToken.exp as number * 1000 < Date.now()) {
-        localStorage.removeItem("token");
+    const storedToken = localStorage.getItem('jwtToken');
+    if (storedToken) {
+        const decodedToken = jwtDecode<DecodedToken>(storedToken as string);
+        console.log(decodedToken);
+    
+        if(decodedToken.exp as number * 1000 < Date.now()) {
+            localStorage.removeItem('jwtToken');
+        } else {
+            initialState.user = decodedToken;
+        }
     } else {
-        initialState.user = decodedToken;
+        console.error('Invalid JWT token');
+        localStorage.removeItem('jwtToken');
     }
+  
 }
 
 // logout function - clears the cache 
@@ -54,7 +62,7 @@ function AuthProvider(props: any) {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     const login = (userData: any) => {
-        localStorage.setItem("jwtToken", userData.token);
+        localStorage.setItem("jwtToken", userData.auth.jwtToken);
         dispatch({
             type: "LOGIN",
             payload: userData

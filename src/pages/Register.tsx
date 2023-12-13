@@ -17,6 +17,7 @@ import {
     Alert
 } from "@mui/material";
 
+// GraphQL mutation for creating a new user
 const REGISTER_USER = gql`
     mutation CreateUser(
         $email: String!, 
@@ -47,19 +48,21 @@ const REGISTER_USER = gql`
 `
 
 const Register = () => {
-    // define context -> allows us to use all the functions in authContext
+    // define and access the authentication context -> allows us to use all the functions in authContext
     const context = useContext(AuthContext);
-    // define navigate, tells browser when to move around
+    // hook for navigation
     const navigate = useNavigate();
-    // all errors coming from Apollo server backend 
+    // state for storing errors coming from the GraphQL server
     const [ errors, setErrors ] = useState<GraphQLError[]>([]);
 
+    // callback function to be executed when the form is submitted
     function createUserCallback() {
-        // call registerUser function to run a createUser mutation
         console.log("Callback works!")
+          // call registerUser function to execute createUser mutation
         registerUser();
     }
 
+    // custom hook for form handling 
     const { onChange, onSubmit, values } = useForm(createUserCallback, {
         firstName: '',
         lastName: '',
@@ -68,15 +71,19 @@ const Register = () => {
         password: ''
     });
 
+    // Apollo mutation hook
     const [ registerUser ] = useMutation(REGISTER_USER, {
-        update(proxy, { data: { registerUser: userData }}) {
+        // function to be executed if mutation is successful
+        update(proxy, { data: { createUser: userData }}) {
+            // log the user in 
             context.login(userData);
-            // navigate to home page when user gets logged in 
+            // navigate to the home page when user gets logged in 
             navigate('/');
         },
         onError(error) {
             setErrors([...error.graphQLErrors]);
         },
+        // variables for the mutation 
         variables: values
     });
     
