@@ -58,7 +58,7 @@ function authReducer(state: any, action: any) {
 }
 
 function AuthProvider(props: any) {
-    // dispatcher allows to do thinsg to reducer state 
+    // dispatcher allows to do things to reducer state 
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     const login = (userData: any) => {
@@ -76,7 +76,7 @@ function AuthProvider(props: any) {
 
     return (
         <AuthContext.Provider 
-            value={{user: state.user, login, logout}}
+            value={{ ...state, login, logout}}
             {...props}
         />
     )
