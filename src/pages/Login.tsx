@@ -12,10 +12,15 @@ import { GraphQLError } from 'graphql';
 import { 
     TextField,
     Button,
-    Container,
+    Avatar,
     Stack,
-    Alert
+    Alert,
+    Grid, 
+    Paper,
+    Container
 } from "@mui/material";
+import * as colors from '@mui/material/colors';
+import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 
 // GraphQL mutation for logging in user
 const LOGIN_USER = gql`
@@ -69,33 +74,49 @@ const Login = () => {
         variables: values
    });
 
+    const paperStyle={
+        padding: 20, 
+        height: '70vh', 
+        width: 300,
+        margin: '20px auto'
+    }
     return (
         <Container maxWidth="sm">
-        <h3>Login</h3>
-        <p>This is the login page, login below!</p>
-        <Stack spacing={2} paddingBottom={2}>
-            <TextField 
-                label="Email"
-                name="email"
-                onChange={onChange}
-            />
-            <TextField 
-                label="Password"
-                name="password"
-                onChange={onChange}
-            />
-        </Stack>
-        {errors.map(function(error){
-            return(
-                <Alert severity='error'>
-                    {error.message}
-                </Alert>
-            )
-        })}
-        <Button variant="contained" onClick={onSubmit}>
-            Submit
-        </Button>
-    </Container>
+            <Paper elevation={10} style={paperStyle}>
+                <Grid container direction="column" justifyContent="center" alignItems="center">
+                    <Avatar sx={{ bgcolor: colors.pink[400]}}>
+                        <LockTwoToneIcon />
+                    </Avatar>
+                    <h2>Sign In</h2>
+                </Grid>
+                <Stack spacing={3} paddingBottom={4}>
+                    <TextField 
+                        label="Email"
+                        name="email"
+                        onChange={onChange}
+                    />
+                    <TextField 
+                        label="Password"
+                        name="password"
+                        type="password"
+                        onChange={onChange}
+                    />
+                </Stack>
+                {errors.map(function(error){
+                    return(
+                        <Alert severity='error'>
+                            {error.message}
+                        </Alert>
+                    )
+                })}
+                <Grid container direction="column" justifyContent="center" alignItems="center">
+                    <Button type='submit' variant="contained" onClick={onSubmit} fullWidth>
+                        Submit
+                    </Button>
+                </Grid>
+            </Paper>
+        </Container>
+       
     );
 };
 

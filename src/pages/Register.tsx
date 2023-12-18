@@ -14,8 +14,13 @@ import {
     Button,
     Container,
     Stack,
-    Alert
+    Alert, 
+    Paper,
+    Grid,
+    Avatar
 } from "@mui/material";
+import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
+import * as colors from '@mui/material/colors';
 
 // GraphQL mutation for creating a new user
 const REGISTER_USER = gql`
@@ -86,48 +91,65 @@ const Register = () => {
         // variables for the mutation 
         variables: values
     });
-    
+
+    const paperStyle={
+        padding: 20, 
+        height: '80vh', 
+        width: 350,
+        margin: '20px auto'
+    }
+
     return (
         <Container maxWidth="sm">
-            <h3>Register</h3>
-            <p>This is the registration page, register below to create an account!</p>
-            <Stack spacing={2} paddingBottom={2}>
-                <TextField 
-                    label="First name"
-                    name="firstName"
-                    onChange={onChange}
-                />
-                <TextField 
-                    label="Last Name"
-                    name="lastName"
-                    onChange={onChange}
-                />
-                <TextField 
-                    label="Email"
-                    name="email"
-                    onChange={onChange}
-                />
-                <TextField 
-                    label="Phone"
-                    name="phone"
-                    onChange={onChange}
-                />
-                <TextField 
-                    label="Password"
-                    name="password"
-                    onChange={onChange}
-                />
-            </Stack>
-            {errors.map(function(error){
-                return(
-                    <Alert severity='error'>
-                        {error.message}
-                    </Alert>
-                )
-            })}
-            <Button variant="contained" onClick={onSubmit}>
-                Submit
-            </Button>
+            <Paper elevation={10} style={paperStyle}>
+            <Grid container direction="column" justifyContent="center" alignItems="center">
+                <Avatar sx={{ bgcolor: colors.pink[400]}}>
+                    <AccountCircleTwoToneIcon />
+                </Avatar>
+                <h2>Register</h2>
+                <p>Please fill out this form to create an account!</p>
+            </Grid>   
+                <Stack spacing={2} paddingBottom={2}>
+                    <TextField 
+                        label="First name"
+                        name="firstName"
+                        onChange={onChange}
+                    />
+                    <TextField 
+                        label="Last Name"
+                        name="lastName"
+                        onChange={onChange}
+                    />
+                    <TextField 
+                        label="Email"
+                        name="email"
+                        onChange={onChange}
+                    />
+                    <TextField 
+                        label="Phone"
+                        name="phone"
+                        onChange={onChange}
+                    />
+                    <TextField 
+                        label="Password"
+                        name="password"
+                        onChange={onChange}
+                    />
+                </Stack>
+                {errors.map(function(error){
+                    return(
+                        <Alert severity='error'>
+                            {error.message}
+                        </Alert>
+                    )
+                })}
+                 <Grid container direction="column" justifyContent="center" alignItems="center">
+                    <Button variant="contained" onClick={onSubmit} fullWidth>
+                        Submit
+                    </Button>
+                 </Grid>
+            </Paper>
+           
         </Container>
     );
 };
