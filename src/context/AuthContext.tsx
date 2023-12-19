@@ -18,8 +18,8 @@ const initialState: { user: DecodedToken | null } = {
     user: null
 }
 
-function clearSession(item: string) {
-    return localStorage.removeItem(item);
+function clearSession() {
+    return localStorage.removeItem('jwtToken');
 }
 
 // if there is token in local storage -> decode the token 
@@ -30,7 +30,7 @@ if(localStorage.getItem('jwtToken')) {
         console.log(decodedToken);
     
         if(decodedToken.exp as number * 1000 < Date.now()) {
-            clearSession('jwtToken');
+            clearSession();
         } else {
             initialState.user = decodedToken;
         }
@@ -81,7 +81,7 @@ function AuthProvider(props: any) {
     }
 
     const logout = () =>  {
-        clearSession('jwtToken');
+        clearSession();
         dispatch({ type: "LOGOUT" })
     }
 

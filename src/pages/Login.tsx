@@ -49,10 +49,6 @@ const Login = () => {
     const context = useContext(AuthContext);
     const [ errors, setErrors ] = useState<GraphQLError[]>([]);
 
-    function loginUserCallback() {
-        loginUser();
-    }
-
    const { onChange, onSubmit, values } = useForm(loginUserCallback, {
         email: '',
         password: ''
@@ -72,6 +68,10 @@ const Login = () => {
         // variables for the mutation 
         variables: values
    });
+
+    function loginUserCallback() {
+        loginUser();
+    }
 
     const paperStyle={
         padding: 20, 

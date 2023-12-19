@@ -13,7 +13,7 @@ function Navbar() {
     const onLogout = () => {
         // call logout function created in the context
         logout();
-        navigate('/');
+        navigate('/login');
     }
     
     console.log(user);
