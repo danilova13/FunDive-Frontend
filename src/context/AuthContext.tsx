@@ -5,9 +5,21 @@ type DecodedToken = {
     userId: number,
     exp: number
 }
+
+type UserData = {
+    auth: {
+        jwtToken: string;
+    },
+    email: string,
+    password: string
+}
 // initial state with an obj that has a user, who is initially null
 const initialState: { user: DecodedToken | null } = {
     user: null
+}
+
+function clearSession(item: string) {
+    return localStorage.removeItem(item);
 }
 
 // if there is token in local storage -> decode the token 
@@ -18,13 +30,12 @@ if(localStorage.getItem('jwtToken')) {
         console.log(decodedToken);
     
         if(decodedToken.exp as number * 1000 < Date.now()) {
-            localStorage.removeItem('jwtToken');
+            clearSession('jwtToken');
         } else {
             initialState.user = decodedToken;
         }
     } else {
         console.error('Invalid JWT token');
-        localStorage.removeItem('jwtToken');
     }
   
 }
@@ -61,7 +72,7 @@ function AuthProvider(props: any) {
     // dispatcher allows to do things to reducer state 
     const [state, dispatch] = useReducer(authReducer, initialState);
 
-    const login = (userData: any) => {
+    const login = (userData: UserData) => {
         localStorage.setItem("jwtToken", userData.auth.jwtToken);
         dispatch({
             type: "LOGIN",
@@ -70,7 +81,7 @@ function AuthProvider(props: any) {
     }
 
     const logout = () =>  {
-        localStorage.removeItem("jwtToken");
+        clearSession('jwtToken');
         dispatch({ type: "LOGOUT" })
     }
 
@@ -82,4 +93,4 @@ function AuthProvider(props: any) {
     )
 }
 
-export { AuthContext, AuthProvider }
+export { AuthContext, AuthProvider, clearSession }

@@ -50,7 +50,6 @@ const Login = () => {
     const [ errors, setErrors ] = useState<GraphQLError[]>([]);
 
     function loginUserCallback() {
-        console.log('Callback works!');
         loginUser();
     }
 
