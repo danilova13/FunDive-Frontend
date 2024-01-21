@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useForm = (callback: any, initialState = {}) => {
+export function useForm<T>(callback: any, initialState: T) {
 
     // values is an obj that holds the current state of form inputs
     const [values, setValues] = useState(initialState);
@@ -22,6 +22,7 @@ export const useForm = (callback: any, initialState = {}) => {
     return {
         onChange,
         onSubmit,
-        values
+        values, 
+        setValues
     }
 }

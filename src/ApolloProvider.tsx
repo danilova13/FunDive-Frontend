@@ -14,10 +14,11 @@ const httpLink = createHttpLink({
 })
 
 const authLink = setContext((_, { headers }) => {
+    const jwtToken = localStorage.getItem('jwtToken');
     return { 
         headers: {
             ...headers,
-            authorization: localStorage.getItem('jwtToken') || ""
+            authorization: jwtToken ? `Bearer ${jwtToken}` : "",
         }
     }
 });

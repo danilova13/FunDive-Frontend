@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
-import Home from './pages/Home';
+import MyDives from './pages/MyDives';
 import Register from './pages/Register';
 import Navbar from './components/Navbar';
+import DiveForm from './pages/DiveForm';
 
 function App() {
   return (
@@ -11,9 +12,10 @@ function App() {
       <BrowserRouter>
       <Navbar />
         <Routes>
-          <Route  path='/' element={<Home />}/>
+          <Route  path='/' element={<MyDives />}/>
           <Route path='/login' element={<Login />}/>
           <Route path='/register' element={<Register />}/>
+          <Route path='/diveform' element={<DiveForm/>} />
         </Routes>
       </BrowserRouter>
     </div>
