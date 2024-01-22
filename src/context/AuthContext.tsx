@@ -13,6 +13,7 @@ type UserData = {
     email: string,
     password: string
 }
+
 // initial state with an obj that has a user, who is initially null
 const initialState: { user: DecodedToken | null } = {
     user: null
@@ -40,8 +41,13 @@ if(localStorage.getItem('jwtToken')) {
   
 }
 
+type AuthContextType = {
+    user: DecodedToken | null,
+    login: (userData: UserData) => void,
+    logout: () => void
+}
 // logout function - clears the cache 
-const AuthContext = createContext({
+const AuthContext = createContext<AuthContextType>({
     user: null,
     login: (userData: any) => {},
     logout: () => {}
@@ -73,10 +79,13 @@ function AuthProvider(props: any) {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     const login = (userData: UserData) => {
-        localStorage.setItem("jwtToken", userData.auth.jwtToken);
+        const storedToken = userData.auth.jwtToken;
+        const decodedToken = jwtDecode<DecodedToken>(storedToken);
+        localStorage.setItem("jwtToken", storedToken);
+        
         dispatch({
             type: "LOGIN",
-            payload: userData
+            payload: decodedToken
         })
     }
 
@@ -87,7 +96,7 @@ function AuthProvider(props: any) {
 
     return (
         <AuthContext.Provider 
-            value={{ ...state, login, logout}}
+            value={{ ...state, login, logout} as AuthContextType }
             {...props}
         />
     )
