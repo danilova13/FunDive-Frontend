@@ -91,7 +91,7 @@ const DiveForm = () => {
                     onChange={(onChange)}
                 />
                 <TextField 
-                    label="Date"
+                    //label="Date"
                     value={values.date}
                     type="date"
                     name="date"
