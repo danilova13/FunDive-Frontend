@@ -136,9 +136,9 @@ const Register = () => {
                         onChange={onChange}
                     />
                 </Stack>
-                {errors.map(function(error){
+                {errors.map((error, i) => {
                     return(
-                        <Alert severity='error'>
+                        <Alert key={i} severity='error'>
                             {error.message}
                         </Alert>
                     )
