@@ -1,9 +1,8 @@
 import React from 'react';
 import { 
-    useContext, 
     useState 
 } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import useAuth from '../utility/useAuth';
 import { useForm } from "../utility/hooks";
 import { useMutation } from '@apollo/client';
 import { gql } from 'graphql-tag';
@@ -46,7 +45,7 @@ const LOGIN_USER = gql`
 const Login = () => {
 
     const navigate = useNavigate();
-    const context = useContext(AuthContext);
+    const context = useAuth();
     const [ errors, setErrors ] = useState<GraphQLError[]>([]);
 
    const { onChange, onSubmit, values } = useForm(loginUserCallback, {

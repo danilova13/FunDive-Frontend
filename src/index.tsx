@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import ApolloProvider from './ApolloProvider';
 import { AuthProvider } from './context/AuthContext';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // our client application needs access to...
 // client (apolloProvider)
@@ -13,12 +14,16 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <AuthProvider>
-    <React.StrictMode>
-      <ApolloProvider/>
-    </React.StrictMode>
-  </AuthProvider>
-  
+  <BrowserRouter>
+    <AuthProvider>
+      <React.StrictMode>
+        <Routes>
+          <Route path="/*" element={ <ApolloProvider/>}/>
+        </Routes>
+      </React.StrictMode>
+    </AuthProvider>
+  </BrowserRouter>
+ 
 );
 
 // If you want to start measuring performance in your app, pass a function
